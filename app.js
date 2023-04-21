@@ -1,7 +1,10 @@
 // //inicio principal
 
-let nombreIngresado = prompt("Ingrese nombre");
-let apellidoIngresado = prompt("Ingrese apellido");
+let nombreIngresado = prompt("Ingresa tu Nombre:");
+let apellidoIngresado = prompt("Ingresa tu Apellido:");
+
+//expresion para solo permitir letras del abecedario en mayusculas y minusculas
+const letras = /^[A-Za-z]+$/;
  
 //variables
 let precioItem;
@@ -10,12 +13,18 @@ let total = 0;
 let seguir; 
 let nombreProducto;
 
-//validacion nombre y apellido que no este en blanco
-if((nombreIngresado !="") && (apellidoIngresado !="")){
-    //alert("Nombre: "+nombreIngresado +"\nApellido: "+apellidoIngresado);
-}else{
-    alert("Error: Ingrese nombre y apellido nuevamente");
+//en este ciclo de while validamos que los campos no queden vacios al ingresar nombre y apellido y se solicitan nuevamente
+while (nombreIngresado === "" || apellidoIngresado === "" || !nombreIngresado.match(letras) || !apellidoIngresado.match(letras)) {
+  nombreIngresado = prompt("Ingresa tu Nombre:");
+  apellidoIngresado = prompt("Ingresa tu Apellido:");
+
+  if (nombreIngresado === "" || apellidoIngresado === "") {
+    alert("Error: debes ingresar tu nombre y apellido.");
+  } else if (!nombreIngresado.match(letras) || !apellidoIngresado.match(letras)) {
+    alert("Error: Ingresa solo letras en los campos de nombre y apellido.");
+  }
 }
+alert("Nombre: " + nombreIngresado + "\nApellido: " + apellidoIngresado);
 
 nombreIngresado = alert("¡Bienvenido al sitio" + " " + nombreIngresado + "! " + " Presiona aceptar para seguir ");
 //nombreProducto = prompt("Ingrese nombre de producto");
@@ -47,7 +56,7 @@ do{
     }
 
     total = parseFloat(total) + parseFloat(precioItem*cantidad);
-    //seguir = prompt("Desea ingresar otro item s/n");
+    seguir = prompt("Desea ingresar otro item s/n");
     // almacenar datos del arreglo hecho anteriormente
     productos.push({
     nombre: nombreProducto,
@@ -87,7 +96,7 @@ for (let i = 0; i < productos.length; i++) {
     totalFila.innerHTML = (productos[i].precio * productos[i].cantidad).toFixed(2);
   }
 
-  //funcion para agregar nuevo producto desde el boton creado y asi ingresar nuevos items al carrito
+//funcion para agregar nuevo producto desde el boton creado y asi ingresar nuevos items al carrito
 function agregarNuevoProducto() {
     let apellidoIngresado = prompt("Ingrese su apellido nuevamente");
     let nombreProducto = prompt("Ingrese nombre del nuevo producto");
@@ -139,7 +148,43 @@ function agregarNuevoProducto() {
       }
     } while (true);
 }
-  
+
+//funcion para realizar busqueda de producto del array
+function buscarProducto() {
+  let busqueda;
+  let encontrado = false;
+
+  while (!encontrado) {
+    busqueda = prompt("Ingresa por favor el nombre del producto:");
+
+    let resultados = productos.filter(function(producto) {
+      return producto.nombre.toLowerCase().includes(busqueda.toLowerCase());
+    });
+
+    if (resultados.length > 0) {
+      resultados.forEach(function(producto) {
+        alert("¡Tu producto fue encontrado! "+producto.nombre + ": Tiene un valor de $" + producto.precio + " " + "Actualmente en stock existen: " + producto.cantidad);
+      });
+
+      let otraBusqueda = prompt("¿Quieres realizar otra búsqueda? (s/n)");
+      
+      while (otraBusqueda.toLowerCase() !== "s" && otraBusqueda.toLowerCase() !== "n") {
+        otraBusqueda = prompt("¡Respuesta inválida! ¿Quieres realizar otra búsqueda? (s/n)");
+      }
+      if (otraBusqueda.toLowerCase() === "n") {
+        encontrado = true;
+      }
+    } else {
+      let confirmacion = confirm("El producto buscado no existe. ¿Quieres realizar otra búsqueda?");
+
+      if (!confirmacion) {
+        encontrado = true;
+      }
+    }
+  }
+}
+
+
 
 
     
