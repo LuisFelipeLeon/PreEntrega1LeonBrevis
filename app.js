@@ -157,6 +157,11 @@ function buscarProducto() {
   while (!encontrado) {
     busqueda = prompt("Ingresa por favor el nombre del producto:");
 
+    if (!busqueda) { 
+      alert("¡Error! Debes ingresar el nombre del producto.");
+      continue; 
+    }
+
     let resultados = productos.filter(function(producto) {
       return producto.nombre.toLowerCase().includes(busqueda.toLowerCase());
     });
@@ -167,7 +172,7 @@ function buscarProducto() {
       });
 
       let otraBusqueda = prompt("¿Quieres realizar otra búsqueda? (s/n)");
-      
+
       while (otraBusqueda.toLowerCase() !== "s" && otraBusqueda.toLowerCase() !== "n") {
         otraBusqueda = prompt("¡Respuesta inválida! ¿Quieres realizar otra búsqueda? (s/n)");
       }
