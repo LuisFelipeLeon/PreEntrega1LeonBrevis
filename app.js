@@ -149,7 +149,7 @@ function agregarNuevoProducto() {
     } while (true);
 }
 
-//funcion para realizar busqueda de producto del array
+//funcion para realizar busqueda de producto del array de acuerdo a lo solicitado
 function buscarProducto() {
   let busqueda;
   let encontrado = false;
