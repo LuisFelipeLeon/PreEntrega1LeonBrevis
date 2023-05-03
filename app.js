@@ -189,10 +189,98 @@ function buscarProducto() {
   }
 }
 
-
-
-
     
+const tablaProductos = document.getElementById("tabla-productos");
+const formularioProducto = document.getElementById("formulario-producto");
+const totalElemento = document.getElementById("total");
+
+let carrito = [];
+
+function agregarProducto(evento) {
+  evento.preventDefault();
+  const producto = formularioProducto.elements.producto.value;
+  const precio = formularioProducto.elements.precio.value;
+  const cantidad = formularioProducto.elements.cantidad.value;
+
+  const total = precio * cantidad;
+
+  const nuevoProducto = {
+    producto: producto,
+    precio: precio,
+    cantidad: cantidad,
+    total: total
+  };
+
+  carrito.push(nuevoProducto);
+  mostrarProductos();
+  actualizarTotal();
+  formularioProducto.reset();
+}
+
+function eliminarProducto(indice) {
+  carrito.splice(indice, 1);
+  mostrarProductos();
+  actualizarTotal();
+}
+
+function mostrarProductos() {
+  tablaProductos.innerHTML = "";
+  carrito.forEach((producto, indice) => {
+    const fila = document.createElement("tr");
+
+    const celdaProducto = document.createElement("td");
+    celdaProducto.textContent = producto.producto;
+    fila.appendChild(celdaProducto);
+
+    const celdaPrecio = document.createElement("td");
+    celdaPrecio.textContent = producto.precio;
+    fila.appendChild(celdaPrecio);
+
+    const celdaCantidad = document.createElement("td");
+    celdaCantidad.textContent = producto.cantidad;
+    fila.appendChild(celdaCantidad);
+
+    const celdaTotal = document.createElement("td");
+    celdaTotal.textContent = producto.total;
+    fila.appendChild(celdaTotal);
+
+    const celdaEliminar = document.createElement("td");
+    const botonEliminar = document.createElement("button");
+    botonEliminar.textContent = "Eliminar";
+    botonEliminar.addEventListener("click", () => eliminarProducto(indice));
+    celdaEliminar.appendChild(botonEliminar);
+    fila.appendChild(celdaEliminar);
+
+    tablaProductos.appendChild(fila);
+  });
+}
+
+function actualizarTotal() {
+  const total = carrito.reduce((suma, producto) => {
+    return suma + producto.total;
+  }, 0);
+
+  totalElemento.textContent = total;
+}
+
+formularioProducto.addEventListener("submit", agregarProducto);
+
+function buscarProductoManual() {
+  // Obtener el término de búsqueda ingresado por el usuario
+  var terminoBusqueda = document.querySelector('#formulario-producto input[name="buscar"]').value.toLowerCase();
+  
+  // Recorrer las filas de la tabla y ocultar las que no coincidan con el término de búsqueda
+  var filas = document.querySelectorAll('#tabla-productos tr');
+  for (var i = 0; i < filas.length; i++) {
+    var nombreProducto = filas[i].querySelector('td:first-child').textContent.toLowerCase();
+    if (nombreProducto.includes(terminoBusqueda)) {
+      filas[i].style.display = '';
+    } else {
+      filas[i].style.display = 'none';
+    }
+  }
+}
+
   
 
   

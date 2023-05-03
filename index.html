@@ -37,6 +37,40 @@
         </table>
     </div>
 
+    <div class="container">
+        <h1 class="text-center mb-4">Agregar productos manual carrito</h1>
+        <table class="table table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+              <th>¿Desea eliminar?</th>
+            </tr>
+          <tbody id="tabla-productos">
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3">Total:</td>
+              <td id="total"></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </thead>
+        </table>
+        <form id="formulario-producto" class="form-inline mb-4">
+          <input type="text" name="producto" placeholder="Nombre Producto" required>
+          <input type="text" name="precio" placeholder="Precio" required>
+          <input type="number" name="cantidad" placeholder="Stock" required>
+          <button type="submit" class="btn btn-success">Agregar Producto</button>
+          <div class="form-group ml-2">
+            <input type="text" class="form-control" name="buscar" placeholder="Nombre de producto">
+          </div>
+          <button type="button" class="btn btn-info ml-2" onclick="buscarProductoManual()">Buscar</button>
+        </form>
+      </div>
+
     <script src="app.js"></script>
 </body>
 </html>
